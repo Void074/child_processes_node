@@ -5,7 +5,7 @@ It all started with a question, how do I execute a script on a remote server? I 
 1. [child-process]() in Node
 2. Inter Process Communication (IPC) in Node
 
-Right now, the code in this repository is bound to change and that's okay with me. All I just need to refine it
+Right now, the code in this repository is bound to change and that's okay with me. All I just need to refine it. Please checkout the other branches, which have code that I have further expanded upon.
 
 ## Dependencies
 
