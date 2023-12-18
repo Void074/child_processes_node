@@ -1,19 +1,8 @@
 import { spawn } from 'node:child_process'
 
-let prog = {
-  list: 'ls'
-}
-
-let child = spawn(prog.list, ['-l'])
-
-child.stdout.on('data', function(data) {
-  console.log(`${data}`)
+const subprocess = spawn('./simulate_database_backup', {
+  detatched: true,
+  stdio: 'ignore'
 })
 
-child.stderr.on('error', function(error) {
-  console.log(`${error}`)
-})
-
-child.on('close', function(code) {
-  console.log(`exited with status code of ${code}`)
-})
+subprocess.unref()

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+## Author: Gedare Dorke
+## Description: This simple bash simluates a long running process 
+echo "Starting database backup"
+touch log.txt
+
+# check log file is successfully created
+if [[ $? -eq 1 ]]; then
+  echo "failed to create \"log.txt\""
+  echo "$(whoami) - $(date +%T): failed to create \"log.txt\"" >> error.log
+  exit 1
+fi
+
+echo "$(whoami) - $(date +%T): \"log.txt\" created" >> log.txt
+echo ">> starting database backup..."
+echo "$(whoami) - $(date +%T): starting database backup" >> log.txt
+sleep 5
+echo ">> database backup created"
+echo ">> trasferring database backup to archive"
+echo "$(whoami) - $(date +%T): transferring database backup to archive" >> log.txt
+sleep 5
+echo ">> database transfer completed"
+echo "$(whoami) - $(date +%T): database transfer completed" >> log.txt
+echo ">> running housing keeping"
+echo "$(whoami) - $(date +%T): running housing keeping" >> log.txt
+sleep 5
+echo ">> housing keeping completed"
+echo "$(whoami) - $(date +%T): housing keeping completed" >> log.txt
+
+if [[ $? -eq 1 ]]; then
+  echo ">> database backup failed"
+  echo "$(whoami) - $(date +%T): database backup failed" >> log.txt
+  exit 1
+fi
+
+echo ">> database backup completed successfully"
+echo "$(whoami) - $(date +%T): database backup completed successfully" >> log.txt
+
