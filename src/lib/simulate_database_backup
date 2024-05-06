@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+## Author: Gedare Dorke
+## Description: This simple bash simluates a long running process 
+echo "Starting database backup"
+
+# TODO(Gedare): Write a Perl Script that can match the date against the
+# log.txt file, which will now be dated. Also use Perl to compare current date with
+# date of log file. if date is different create file with current date if dates are the 
+# simply append to exsisting log.txt
+## check log.txt
+if [[ -f log.txt ]]; then
+  rm -rf log.txt
+  touch log.txt
+fi
+
+# check log file is successfully created
+if [[ $? -eq 1 ]]; then
+  echo "failed to create \"log.txt\""
+  echo "$(whoami) - $(date +%Y%m%d-%T): failed to create \"log.txt\"" >> error.log
+  exit 1
+fi
+
+echo "$(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created" >> log.txt
+echo ">> starting database backup..."
+echo "$(whoami) - $(date +%Y%m%d-%T): starting database backup" >> log.txt
+sleep 5
+echo ">> database backup created"
+echo ">> trasferring database backup to archive"
+echo "$(whoami) - $(date +%Y%m%d-%T): transferring database backup to archive" >> log.txt
+sleep 5
+echo ">> database transfer completed"
+echo "$(whoami) - $(date +%Y%m%d-%T): database transfer completed" >> log.txt
+echo ">> running housing keeping"
+echo "$(whoami) - $(date +%Y%m%d-%T): running housing keeping" >> log.txt
+sleep 5
+echo ">> housing keeping completed"
+echo "$(whoami) - $(date +%Y%m%d-%T): housing keeping completed" >> log.txt
+
+if [[ $? -eq 1 ]]; then
+  echo ">> database backup failed"
+  echo "$(whoami) - $(date +%Y%m%d-%T): database backup failed" >> log.txt
+  exit 1
+fi
+
+echo ">> database backup completed successfully"
+echo "$(whoami) - $(date +%Y%m%d-%T): database backup completed successfully" >> log.txt
+exit 0
+
