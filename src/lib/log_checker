@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+use v5.34.0;
+use POSIX qw(strftime);
+
+my $datetime = strftime "%G%m%d", localtime;
+print "$datetime\n";

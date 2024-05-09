@@ -1,49 +1,54 @@
 #!/usr/bin/env bash
-
+#######
 ## Author: Gedare Dorke
 ## Description: This simple bash simluates a long running process 
-echo "Starting database backup"
+#######
 
-# TODO(Gedare): Write a Perl Script that can match the date against the
-# log.txt file, which will now be dated. Also use Perl to compare current date with
-# date of log file. if date is different create file with current date if dates are the 
-# simply append to exsisting log.txt
-## check log.txt
-if [[ -f log.txt ]]; then
-  rm -rf log.txt
-  touch log.txt
-fi
+script_path=$(realpath $0)
+script_src=$(dirname $script_path)
+project_root="$DIR_PATH"
+log_dir="$project_root/src/logs"
+error_dir="$project_root/src/errors"
+
+echo "Starting database backup"
+prefix=$($script_src/log_checker)
+
+# TODO(Gedare): Before creating this log need to check previous log file based on current date
+# if current date -eq created at append output to current log, however, if date create -ne current date
+# create new log file with current date and write to it. Use perl for this
+touch $log_dir/${prefix}.log
 
 # check log file is successfully created
 if [[ $? -eq 1 ]]; then
+  touch $error_dir/error.log
   echo "failed to create \"log.txt\""
-  echo "$(whoami) - $(date +%Y%m%d-%T): failed to create \"log.txt\"" >> error.log
+  echo "$(whoami) - $(date +%Y%m%d-%T): failed to create \"log.txt\"" >> $error_dir/error.log
   exit 1
 fi
 
-echo "$(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created" >> $log_dir/${prefix}.log
+echo "$(whoami) - $(date +%Y%m%d-%T): $project_root" >> $log_dir/${prefix}.log
 echo ">> starting database backup..."
-echo "$(whoami) - $(date +%Y%m%d-%T): starting database backup" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): starting database backup" >> $log_dir/${prefix}.log
 sleep 5
 echo ">> database backup created"
 echo ">> trasferring database backup to archive"
-echo "$(whoami) - $(date +%Y%m%d-%T): transferring database backup to archive" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): transferring database backup to archive" >> $log_dir/${prefix}.log
 sleep 5
 echo ">> database transfer completed"
-echo "$(whoami) - $(date +%Y%m%d-%T): database transfer completed" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): database transfer completed" >> $log_dir/${prefix}.log
 echo ">> running housing keeping"
-echo "$(whoami) - $(date +%Y%m%d-%T): running housing keeping" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): running housing keeping" >> $log_dir/${prefix}.log
 sleep 5
 echo ">> housing keeping completed"
-echo "$(whoami) - $(date +%Y%m%d-%T): housing keeping completed" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): housing keeping completed" >> $log_dir/${prefix}.log
 
 if [[ $? -eq 1 ]]; then
   echo ">> database backup failed"
-  echo "$(whoami) - $(date +%Y%m%d-%T): database backup failed" >> log.txt
+  echo "$(whoami) - $(date +%Y%m%d-%T): database backup failed" >> $error_dir/error.log
   exit 1
 fi
 
 echo ">> database backup completed successfully"
-echo "$(whoami) - $(date +%Y%m%d-%T): database backup completed successfully" >> log.txt
+echo "$(whoami) - $(date +%Y%m%d-%T): database backup completed successfully" >> $log_dir/${prefix}.log
 exit 0
-
