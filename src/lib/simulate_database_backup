@@ -7,8 +7,8 @@
 script_path=$(realpath $0)
 script_src=$(dirname $script_path)
 project_root="$DIR_PATH"
-log_dir="$project_root/src/logs"
-error_dir="$project_root/src/errors"
+log_dir="$project_root/src/logs/app"
+error_dir="$project_root/src/logs/errors"
 
 echo "Starting database backup"
 prefix=$($script_src/log_checker)
@@ -26,29 +26,31 @@ if [[ $? -eq 1 ]]; then
   exit 1
 fi
 
-echo "$(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created" >> $log_dir/${prefix}.log
 echo "$(whoami) - $(date +%Y%m%d-%T): $project_root" >> $log_dir/${prefix}.log
-echo ">> starting database backup..."
-echo "$(whoami) - $(date +%Y%m%d-%T): starting database backup" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): \"log.txt\" created" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): starting database backup..."
+echo ">> $(whoami) - $(date +%Y%m%d-%T): starting database backup" >> $log_dir/${prefix}.log
 sleep 5
-echo ">> database backup created"
-echo ">> trasferring database backup to archive"
-echo "$(whoami) - $(date +%Y%m%d-%T): transferring database backup to archive" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(data +%Y%m%d-%T): database backup created"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): database backup created" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): trasferring database backup to archive"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): transferring database backup to archive" >> $log_dir/${prefix}.log
 sleep 5
-echo ">> database transfer completed"
-echo "$(whoami) - $(date +%Y%m%d-%T): database transfer completed" >> $log_dir/${prefix}.log
-echo ">> running housing keeping"
-echo "$(whoami) - $(date +%Y%m%d-%T): running housing keeping" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): database transfer completed"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): database transfer completed" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): running housing keeping"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): running housing keeping" >> $log_dir/${prefix}.log
 sleep 5
-echo ">> housing keeping completed"
-echo "$(whoami) - $(date +%Y%m%d-%T): housing keeping completed" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): housing keeping completed"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): housing keeping completed" >> $log_dir/${prefix}.log
 
 if [[ $? -eq 1 ]]; then
-  echo ">> database backup failed"
-  echo "$(whoami) - $(date +%Y%m%d-%T): database backup failed" >> $error_dir/error.log
+  echo ">> $(whoami) - $(date +%Y%m%d-%T): database backup failed"
+  echo ">> $(whoami) - $(date +%Y%m%d-%T): database backup failed" >> $error_dir/error.log
   exit 1
 fi
 
-echo ">> database backup completed successfully"
-echo "$(whoami) - $(date +%Y%m%d-%T): database backup completed successfully" >> $log_dir/${prefix}.log
+echo ">> $(whoami) - $(date +%Y%m%d-%T): database backup completed successfully"
+echo ">> $(whoami) - $(date +%Y%m%d-%T): database backup completed successfully" >> $log_dir/${prefix}.log
 exit 0
